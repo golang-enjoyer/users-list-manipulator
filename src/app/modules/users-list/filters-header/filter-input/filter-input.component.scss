@@ -1,0 +1,18 @@
+.filter-input {
+    position: relative;
+    display: flex;
+
+    &__label {
+        color: cornflowerblue;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    &__field {
+        input {
+            height: 1rem;
+            width: 14rem;
+            padding: 0.5rem;
+        }
+    }
+}

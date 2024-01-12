@@ -1,0 +1,12 @@
+<h1 class="header-title">{{blockHeader}}</h1>
+<div class="header-content">
+<div class="filter-inputs">
+    <app-filter-input *ngFor="let inputFilter of inputFilters"
+     [inputLabel]="inputFilter.label"
+     [inputPlaceholder]="inputFilter.placeholder"
+     [inputType]="inputFilter.type"
+     >
+    </app-filter-input>
+</div>
+<button class="header-content__button">{{buttonText}}</button>
+</div>
