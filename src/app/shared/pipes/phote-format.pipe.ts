@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'phoneFormat'
+  name: 'phoneFormat',
 })
 export class PhoneFormatPipe implements PipeTransform {
   transform(phoneNumber: string): string {
@@ -11,6 +11,6 @@ export class PhoneFormatPipe implements PipeTransform {
 
     const hiddenPart = 'xxx xx xx';
 
-    return `7 ${phoneNumber.slice(1, 4)} ${hiddenPart}`;
+    return `+7 ${phoneNumber.slice(3, 6)} ${hiddenPart}`;
   }
 }

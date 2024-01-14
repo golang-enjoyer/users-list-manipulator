@@ -1,8 +1,22 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  combineLatest,
+  map,
+  takeUntil,
+} from 'rxjs';
 import { FilterService } from 'src/app/shared/services/filter.service';
-import { USERS_MOCK_DATA, TABLE_HEADERS } from './consts';
+import { TABLE_HEADERS } from './consts';
 import { User } from 'src/app/shared';
+import { Store } from '@ngrx/store';
+import {
+  loadUsers,
+  deleteSelectedUsers,
+  applyFilters,
+} from 'src/app/store/actions';
+import { selectUsers, selectFilteredUsers } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-users-table',
@@ -11,15 +25,27 @@ import { User } from 'src/app/shared';
 })
 export class UsersTableComponent implements OnInit, OnDestroy {
   tableHeaders: string[] = TABLE_HEADERS;
-  users$: BehaviorSubject<User[]> = new BehaviorSubject(USERS_MOCK_DATA);
+  store = inject(Store);
 
-  filteredUsers$ = new BehaviorSubject<User[]>([]);
-  filteredAndPaginatedUsers$ = new BehaviorSubject<User[]>([]);
+  users$: Observable<User[] | null> = this.store.select(selectUsers);
+
+  filteredUsers$: Observable<User[] | null> =
+    this.store.select(selectFilteredUsers);
+
+  currentPage$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+
+  filteredAndPaginatedUsers$: Observable<User[]> = combineLatest([
+    this.filteredUsers$,
+    this.currentPage$,
+  ]).pipe(
+    map(([filteredUsers, currentPage]) =>
+      this.getFilteredAndPaginatedUsers(filteredUsers, currentPage)
+    )
+  );
 
   isRowHovered: boolean = false;
-  currentPage: number = 1;
 
-  readonly itemsPerPage: number = 2;
+  readonly itemsPerPage: number = 3;
 
   get areIdsSelected(): boolean {
     return this.selectedUserIds.length > 0;
@@ -32,6 +58,8 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   private filterService = inject(FilterService);
 
   ngOnInit(): void {
+    this.store.dispatch(loadUsers());
+
     this.filterService.filters$
       .pipe(takeUntil(this.destroy$))
       .subscribe((filters) => {
@@ -39,39 +67,19 @@ export class UsersTableComponent implements OnInit, OnDestroy {
       });
   }
 
-  applyFilters(data: User[], filters: { [key: string]: string }): User[] {
-    return data.filter((item) => {
-      return Object.keys(filters).every((filterKey) => {
-        const filterValue = filters[filterKey];
-        const itemValue = item[filterKey as keyof User];
+  getFilteredAndPaginatedUsers(
+    dataToSlice: User[] | null,
+    currentPage: number
+  ): User[] {
+    if (!dataToSlice) return [];
 
-        if (
-          filterValue !== '' &&
-          itemValue !== undefined &&
-          itemValue !== null
-        ) {
-          const normalizedFilterValue = filterValue.toLowerCase();
-          const normalizedItemValue = itemValue.toString().toLowerCase();
-
-          return normalizedItemValue.includes(normalizedFilterValue);
-        }
-
-        return true;
-      });
-    });
-  }
-
-  getFilteredAndPaginatedUsers(dataToSlice: User[]): User[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const startIndex = (currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return dataToSlice.slice(startIndex, endIndex);
   }
 
   onPageChange(page: number): void {
-    this.currentPage = page;
-    this.filteredAndPaginatedUsers$.next(
-      this.getFilteredAndPaginatedUsers(this.filteredUsers$.value)
-    );
+    this.currentPage$.next(page);
   }
 
   handleCheckboxClick(userId: number): void {
@@ -87,15 +95,12 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   }
 
   deleteSelectedRows(): void {
-    this.users$.next(
-      this.users$.value.filter(
-        (user) => !this.selectedUserIds.includes(user.id)
-      )
+    this.store.dispatch(
+      deleteSelectedUsers({ selectedUserIds: this.selectedUserIds })
     );
-    this.filteredUsers$.next(this.users$.value);
-    this.filteredAndPaginatedUsers$.next(
-      this.getFilteredAndPaginatedUsers(this.filteredUsers$.value)
-    );
+
+    this.currentPage$.next(1);
+
     this.selectedUserIds = [];
   }
 
@@ -107,10 +112,7 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   private updateFilteredAndPaginatedUsers(filters: {
     [key: string]: string;
   }): void {
-    const filteredData = this.applyFilters(this.users$.value, filters);
-    this.filteredUsers$.next(filteredData);
-    this.filteredAndPaginatedUsers$.next(
-      this.getFilteredAndPaginatedUsers(this.filteredUsers$.value)
-    );
+    this.currentPage$.next(1);
+    this.store.dispatch(applyFilters({ filters }));
   }
 }

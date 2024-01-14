@@ -1,7 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { phoneNumberValidator } from 'src/app/shared/validators/phone-number.validator';
+import { addUser } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-users-list',
@@ -12,7 +14,7 @@ export class UsersListComponent implements OnInit {
   userForm!: FormGroup;
   private modalService = inject(ModalService);
   private fb = inject(FormBuilder);
-
+  private store = inject(Store);
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -32,7 +34,12 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.modalService.closeModal();
+
+    this.store.dispatch(addUser({ user: this.userForm.value }));
+    this.userForm.reset();
+  }
 
   toggleModal(): void {
     this.modalService.openModal();

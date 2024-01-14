@@ -1,4 +1,4 @@
-<ng-container *ngIf="filteredUsers$ | async as filteredUsers">
+<ng-container *ngIf="filteredUsers$ | async as filteredUsers; else loadingTpl">
   <ng-container *ngIf="filteredUsers.length; else noDataTpl">
   <table class="users-table">
       <thead>
@@ -26,11 +26,18 @@
         </tr>
       </tbody>
     </table>
-    <button *ngIf="areIdsSelected" (click)="deleteSelectedRows()">Удалить выбранные строки</button>
+    <button *ngIf="areIdsSelected" class="users-table__delete-button" (click)="deleteSelectedRows()">Удалить выбранные строки</button>
 
-    <app-pagination [currentPage]="currentPage" [totalItems]="filteredUsers.length" [itemsPerPage]="2" (pageChange)="onPageChange($event)"></app-pagination>
+    <app-pagination [currentPage]="currentPage$.value" [totalItems]="filteredUsers.length" [itemsPerPage]="itemsPerPage" (pageChange)="onPageChange($event)"></app-pagination>
   </ng-container>
 </ng-container>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    Loading...
+  </div>
+</ng-template>
+
 
 <ng-template #noDataTpl>
   <div class="no-data">

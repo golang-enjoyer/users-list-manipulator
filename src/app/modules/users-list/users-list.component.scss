@@ -1,72 +1,73 @@
 .add-button {
-    display: flex;
-    margin-left: auto;
+  display: flex;
+  margin-left: auto;
 }
 
 .add-button {
-    margin-right: 4.75rem;
-    padding: 0.75rem;
+  margin-right: 4.75rem;
+  padding: 0.75rem;
+  color: white;
+  background-color: blue;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.add-title {
+  color: cornflowerblue;
+}
+
+.form {
+  max-width: 18rem;
+  margin: 0 auto;
+
+  &__control {
+    display: flex;
+    flex-direction: column;
+
+    & + & {
+      margin-top: 2rem;
+    }
+
+    input {
+      width: 15rem;
+      padding: 0.5rem 1rem;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      text-align: left;
+      cursor: pointer;
+    }
+  }
+
+  &__phone-control {
+    input,
+    label {
+      display: flex;
+      align-self: center;
+    }
+  }
+
+  &__save-button {
+    width: 100%;
+    margin-top: 5rem;
+    padding: 0.75rem 0;
     color: white;
     background-color: cornflowerblue;
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
-}
 
-.add-title {
-    color: cornflowerblue;
-}
-
-.form {
-    max-width: 18rem;
-    margin: 0 auto;
-
-    &__control {
-        display: flex;
-        flex-direction: column;
-
-        & + & {
-            margin-top: 2rem;
-        }
-
-        input {
-            width: 15rem;
-            padding: 0.5rem 1rem;
-        }
-    
-        label {
-            margin-bottom: 0.5rem;
-            text-align: left;
-            cursor: pointer;
-        }
+    &:disabled {
+      background-color: grey;
     }
-
-    &__phone-control {
-        input, label {
-            display: flex;
-            align-self: center;
-        }
-    }
-
-    &__save-button {
-        width: 100%;
-        margin-top: 5rem;
-        padding: 0.75rem 0;
-        color: white;
-        background-color: cornflowerblue;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-
-        &:disabled {
-            background-color: grey;
-        }
-    }
+  }
 }
 
 .control {
-    &__validation-error {
-        margin-top: 0.5rem;
-        color: red;
-    }
+  &__validation-error {
+    margin-top: 0.5rem;
+    color: red;
+  }
 }

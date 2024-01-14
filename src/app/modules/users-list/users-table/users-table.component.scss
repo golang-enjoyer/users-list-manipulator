@@ -38,8 +38,19 @@
   &__email-column {
     color: cornflowerblue;
   }
+
+  &__delete-button {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    color: white;
+    background-color: blue;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
 }
 
+.loading,
 .no-data {
   margin-top: 1rem;
   text-align: center;
