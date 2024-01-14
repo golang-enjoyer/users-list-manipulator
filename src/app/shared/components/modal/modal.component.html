@@ -1,0 +1,8 @@
+<div *ngIf="showModal$ | async" class="modal">
+    <div class="modal__inner">
+        <div class="modal-content">
+        <button class="modal-content__close-button" (click)="closeModal()">&times;</button>
+        <ng-content></ng-content>
+        </div>
+    </div>
+</div>

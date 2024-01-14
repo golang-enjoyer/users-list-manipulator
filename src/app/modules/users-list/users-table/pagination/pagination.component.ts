@@ -22,7 +22,7 @@ export class PaginationComponent {
     }
   }
 
-  getPagesArray(): (number)[] {
+  getPagesArray(): number[] {
     const totalPages = this.totalPages;
     const currentPage = this.currentPage;
     const maxPagesToShow = 3;
@@ -34,17 +34,14 @@ export class PaginationComponent {
     const pagesArray: number[] = [];
 
     if (currentPage <= 1) {
-      // First page, show 1, 2, 3
       for (let i = 1; i <= maxPagesToShow; i++) {
         pagesArray.push(i);
       }
     } else if (currentPage >= totalPages) {
-      // Last page, show (totalPages - 2), (totalPages - 1), totalPages
       for (let i = totalPages - maxPagesToShow + 1; i <= totalPages; i++) {
         pagesArray.push(i);
       }
     } else {
-      // Show current, previous, and next pages
       for (let i = currentPage - 1; i <= currentPage + 1; i++) {
         pagesArray.push(i);
       }

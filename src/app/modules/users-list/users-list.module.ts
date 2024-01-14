@@ -6,6 +6,7 @@ import { FilterInputComponent } from './filters-header/filter-input/filter-input
 import { UsersTableComponent } from './users-table/users-table.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PaginationComponent } from './users-table/pagination/pagination.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,9 @@ import { PaginationComponent } from './users-table/pagination/pagination.compone
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     UsersListComponent,

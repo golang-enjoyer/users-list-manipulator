@@ -1,3 +1,67 @@
 <app-filters-header></app-filters-header>
 <app-users-table></app-users-table>
-<button class="add-user">Добавить пользователя</button>
+<button class="add-button" (click)="toggleModal()">Добавить пользователя</button>
+<app-modal>
+    <h1 class="add-title">Добавление данных об экспертах по оценке и руководителей
+    </h1>
+        <form class="add-user__form form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="form__control form__date-control control">
+                <label for="registrationDate">Дата регистрации:</label>
+                <input type="date" id="registrationDate" formControlName="registrationDate" placeholder="Выберите дату регистрации">
+                <div *ngIf="registrationDateControl?.hasError('required') && (registrationDateControl?.dirty || registrationDateControl?.touched)" class="control__validation-error">
+                    Введите дату регистрации.
+                </div>
+            </div>
+
+            <div class="form__control form__name-control control">
+            <label for="fullName">ФИО:</label>
+            <input type="text" id="fullName" formControlName="fullName" placeholder="Введите ФИО">
+            <div *ngIf="fullNameControl?.hasError('required') && (fullNameControl?.dirty || fullNameControl?.touched)" class="control__validation-error">
+               Введите ФИО.
+            </div>
+            </div>
+
+            <div class="form__control form__position-control control">
+            <label for="position">Должность:</label>
+            <input type="text" id="position" formControlName="position" placeholder="Введите должность">
+            <div *ngIf="positionControl?.hasError('required') && (positionControl?.dirty || positionControl?.touched)" class="control__validation-error">
+                Введите должность.
+            </div>
+            </div>
+
+            <div class="form__control form__email-control control">
+            <label for="email">Почта (логин):</label>
+            <input type="email" id="email" formControlName="email" placeholder="Введите почту (логин)">
+            <div *ngIf="emailControl?.hasError('required') && (emailControl?.dirty || emailControl?.touched)" class="control__validation-error">
+                Введите почту (логин)
+             </div>
+            <div *ngIf="emailControl?.hasError('email') && (emailControl?.dirty || emailControl?.touched)" class="control__validation-error">
+                Введите почту (логин) в формате xxxx@xxx.xx
+             </div>
+            </div>
+          
+             <div class="form__control form__date-control control">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" formControlName="password" placeholder="Введите пароль">
+            <div *ngIf="passwordControl?.hasError('required') && (passwordControl?.dirty || passwordControl?.touched)" class="control__validation-error">
+                Введите пароль.
+              </div>
+            <div *ngIf="passwordControl?.hasError('minlength') && (passwordControl?.dirty || passwordControl?.touched)" class="control__validation-error">
+                Минимальная длина пароля - 6 символов.
+            </div>
+            </div>
+          
+            <div class="form__control form__phone-control control">
+                <label for="phoneNumber">Телефон, привязанный к мессенджеру:</label>
+                <input type="tel" id="phoneNumber" pattern="\+7 \d{3} \d{3} \d{2} \d{2}" formControlName="phoneNumber" placeholder="Введите телефон, привязанный к мессенджеру">
+                <div *ngIf="phoneNumberControl?.hasError('required') && (phoneNumberControl?.dirty || phoneNumberControl?.touched)" class="control__validation-error">
+                    Введите номер телефона
+                </div>
+                <div *ngIf="phoneNumberControl?.hasError('invalidPhoneNumber') && (phoneNumberControl?.dirty || phoneNumberControl?.touched)" class="control__validation-error">
+                    Некорректный формат телефона. Введите в формате: +7 XXX XXX XX XX
+                </div>
+            </div>
+          
+            <button class="form__save-button" type="submit" [disabled]="userForm.invalid">Сохранить</button>
+        </form>
+</app-modal>
