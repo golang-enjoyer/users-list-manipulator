@@ -4,6 +4,8 @@ import { UsersListComponent } from './users-list.component';
 import { FiltersHeaderComponent } from './filters-header/filters-header.component';
 import { FilterInputComponent } from './filters-header/filter-input/filter-input.component';
 import { UsersTableComponent } from './users-table/users-table.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PaginationComponent } from './users-table/pagination/pagination.component';
 
 
 
@@ -12,10 +14,12 @@ import { UsersTableComponent } from './users-table/users-table.component';
     UsersListComponent,
     FiltersHeaderComponent,
     FilterInputComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    PaginationComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     UsersListComponent,

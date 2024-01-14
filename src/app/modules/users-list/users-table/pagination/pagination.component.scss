@@ -1,0 +1,29 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    margin-top: 1rem;
+
+    &__nav-shevron,
+    &__page {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    &__page {
+        font-size: 1rem;
+        color: black;
+        transition: color .3s ease-in-out;
+
+        &:hover {
+            color: cornflowerblue;
+        }
+
+        &.active {
+            color: blue;
+        }
+    }
+}

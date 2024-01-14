@@ -1,0 +1,7 @@
+<div class="pagination">
+    <button class="pagination__nav-shevron" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage <= 1">&lt;</button>
+    <button class="pagination__page" *ngFor="let page of getPagesArray()" (click)="onPageChange(page)" [class.active]="page === currentPage">
+      {{ page }}
+    </button>
+    <button class="pagination__nav-shevron" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage >= totalPages">&gt;</button>
+  </div>
