@@ -1,12 +1,24 @@
-<h1 class="header-title">{{blockHeader}}</h1>
-<div class="header-content">
-<div class="filter-inputs">
-    <app-filter-input *ngFor="let inputFilter of inputFilters"
-     [inputLabel]="inputFilter.label"
-     [inputPlaceholder]="inputFilter.placeholder"
-     [inputType]="inputFilter.type"
-     >
-    </app-filter-input>
-</div>
-<button class="header-content__button">{{buttonText}}</button>
-</div>
+<h1 class="header-title">Список экспертов по оценке и руководителей</h1>
+<form [formGroup]="filterForm">
+  <div class="header-content">
+    <div class="filter-inputs">
+      <div *ngFor="let filter of inputFilters">
+        <div class="filter-input">
+          <label class="filter-input__label">{{ filter.label }}
+            <div class="filter-input__field">
+              <input [formControlName]="filter.label" [type]="filter.type" [placeholder]="filter.placeholder">
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="buttons-block">
+    <button class="header-content__button" type="button" (click)="applyFilters()">
+      Применить фильтры
+    </button>
+    <button class="header-content__button" type="button" (click)="clearFilters()">
+      Очистить фильтры
+    </button>
+  </div>
+  </div>
+</form>

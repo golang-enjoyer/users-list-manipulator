@@ -12,7 +12,7 @@
 .header-content {
     display: flex;
     justify-content: space-around;
-    align-items: end;
+    align-items: center;
 
     .filter-inputs {
         display: flex;
@@ -28,5 +28,30 @@
         background-color: blue;
         border: transparent;
         color: white;
+    }
+}
+
+.buttons-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-input {
+    position: relative;
+    display: flex;
+
+    &__label {
+        color: cornflowerblue;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    &__field {
+        input {
+            height: 1rem;
+            width: 14rem;
+            padding: 0.5rem;
+        }
     }
 }

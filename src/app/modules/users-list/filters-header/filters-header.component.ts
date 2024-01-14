@@ -1,34 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Filter, FilterFormControls } from 'src/app/shared';
+import { FilterService } from 'src/app/shared/services/filter.service';
+import { INPUT_FILTERS } from './consts';
 
 @Component({
   selector: 'app-filters-header',
   templateUrl: './filters-header.component.html',
-  styleUrls: ['./filters-header.component.scss']
+  styleUrls: ['./filters-header.component.scss'],
 })
-export class FiltersHeaderComponent {
-  readonly blockHeader: string = "Список экспертов по оценке и руководителей";
+export class FiltersHeaderComponent implements OnInit {
+  readonly inputFilters: Filter[] = INPUT_FILTERS;
+  filterForm!: FormGroup;
 
-  readonly buttonText: string = "Применить фильтры";
+  private fb = inject(FormBuilder);
+  private filterService = inject(FilterService);
 
-  readonly inputFilters: any[] = [{
-    label: "ID",
-    placeholder: "Введите ID",
-    type: "number"
-  },
-  {
-    label: "ФИО",
-    placeholder: "Введите ФИО участника",
-    type: "string"
-  },
-  {
-    label: "Должность",
-    placeholder: "Введите должность участника",
-    type: "string"
-  },
-  {
-    label: "Почта (логин)",
-    placeholder: "Введите почту участника",
-    type: "string"
-  },
-]
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  applyFilters(): void {
+    this.filterService.updateFilters(this.filterForm.value);
+  }
+
+  clearFilters(): void {
+    this.createForm();
+    this.filterService.clearFilters();
+  }
+
+  createForm(): void {
+    const formControls: FilterFormControls = {};
+
+    this.inputFilters.forEach((filter) => {
+      formControls[filter.label] = this.fb.control('');
+    });
+
+    this.filterForm = this.fb.group(formControls);
+  }
 }

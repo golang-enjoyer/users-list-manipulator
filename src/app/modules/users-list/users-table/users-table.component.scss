@@ -1,40 +1,46 @@
 :host {
-    display: block;
-    max-width: 80rem;
-    margin: 0 auto;
+  display: block;
+  max-width: 80rem;
+  margin: 0 auto;
 }
 
 .users-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.25rem;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.25rem;
 
-    &__checkbox-header {
-        display: block;
-        visibility: hidden;
-    }
-    
-    &__table-row {
-        position: relative;
-    }
-
-    &__select-checkbox {
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    &__email-column {
-        color: cornflowerblue;
-    }
-}
-  
-  th, td {
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 0.5rem;
     text-align: center;
   }
-  
+
   th {
     color: cornflowerblue;
   }
+
+  &__checkbox-header {
+    display: block;
+    visibility: hidden;
+  }
+
+  &__table-row {
+    position: relative;
+  }
+
+  &__select-checkbox {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  &__email-column {
+    color: cornflowerblue;
+  }
+}
+
+.no-data {
+  margin-top: 1rem;
+  text-align: center;
+}

@@ -6,12 +6,12 @@ import { phoneNumberValidator } from 'src/app/shared/validators/phone-number.val
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  styleUrls: ['./users-list.component.scss'],
 })
-export class UsersListComponent implements OnInit{
+export class UsersListComponent implements OnInit {
   userForm!: FormGroup;
-  private modalService = inject(ModalService)
-  private fb = inject(FormBuilder)
+  private modalService = inject(ModalService);
+  private fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.initializeForm();
@@ -25,19 +25,17 @@ export class UsersListComponent implements OnInit{
       position: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phoneNumber: ['', Validators.compose([Validators.required, phoneNumberValidator()])]
+      phoneNumber: [
+        '',
+        Validators.compose([Validators.required, phoneNumberValidator()]),
+      ],
     });
-
-    this.userForm.valueChanges.subscribe(() => {
-      console.log(this.userForm)
-    })
   }
 
-  onSubmit(): void {
-  }
+  onSubmit(): void {}
 
   toggleModal(): void {
-    this.modalService.openModal()
+    this.modalService.openModal();
   }
 
   get registrationDateControl() {

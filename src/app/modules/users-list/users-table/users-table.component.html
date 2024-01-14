@@ -1,28 +1,39 @@
-<table class="users-table">
-    <thead>
-        <tr>
-          <th class="users-table__checkbox-header"></th>
-          <th *ngFor="let header of tableHeaders">{{ header }}</th>
+<ng-container *ngIf="filteredUsers$ | async as filteredUsers">
+  <ng-container *ngIf="filteredUsers.length; else noDataTpl">
+  <table class="users-table">
+      <thead>
+          <tr>
+            <th class="users-table__checkbox-header"></th>
+            <th *ngFor="let header of tableHeaders">{{ header }}</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredAndPaginatedUsers$ | async" class="users-table__table-row" (mouseenter)="isRowHovered = true" (mouseleave)="isRowHovered = false">
+          <div>
+          <input *ngIf="isRowHovered" class="users-table__select-checkbox" type="checkbox" [checked]="isUserSelected(user.id)" (click)="handleCheckboxClick(user.id)"/>
+        </div>
+          <td>{{ user.id }}</td>
+          <td>{{ user.registrationDate | date: 'dd.MM.yyyy' }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.position }}</td>
+          <td class="users-table__email-column">
+            <a [href]="'mailto:' + user.email">
+              {{ user.email }}
+            </a>
+          </td>
+          <td>{{ user.password | passwordHide}}</td>
+          <td>{{ user.phoneNumber | phoneFormat}}</td>
         </tr>
-      </thead>
-    <tbody>
-      <tr *ngFor="let user of getUsersForCurrentPage()" class="users-table__table-row" (mouseenter)="user.hovered = true" (mouseleave)="user.hovered = false">
-        <div>
-        <input *ngIf="user.hovered" class="users-table__select-checkbox" type="checkbox" (click)="$event.stopPropagation()" />
-      </div>
-        <td>{{ user.id }}</td>
-        <td>{{ user.registrationDate | date: 'dd.MM.yyyy' }}</td>
-        <td>{{ user.fullName }}</td>
-        <td>{{ user.position }}</td>
-        <td class="users-table__email-column">
-          <a [href]="'mailto:' + user.email">
-            {{ user.email }}
-          </a>
-        </td>
-        <td>{{ user.password | passwordHide}}</td>
-        <td>{{ user.phoneNumber | phoneFormat}}</td>
-      </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+    <button *ngIf="areIdsSelected" (click)="deleteSelectedRows()">Удалить выбранные строки</button>
 
-  <app-pagination [currentPage]="currentPage" [totalItems]="users.length" [itemsPerPage]="2" (pageChange)="onPageChange($event)"></app-pagination>
+    <app-pagination [currentPage]="currentPage" [totalItems]="filteredUsers.length" [itemsPerPage]="2" (pageChange)="onPageChange($event)"></app-pagination>
+  </ng-container>
+</ng-container>
+
+<ng-template #noDataTpl>
+  <div class="no-data">
+  Нет данных с такими параметрами
+  </div>  
+</ng-template>
