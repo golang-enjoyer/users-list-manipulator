@@ -55,5 +55,52 @@ export const userReducer = createReducer(
       users: [...state.users!, newUser],
       filteredUsers: [...state.filteredUsers!, newUser], // You might need to update filteredUsers if needed
     };
+  }),
+  on(UserActions.filterUsersByHeader, (state, { headerControl }) => {
+    let filteredUsers: User[] = [];
+    if (!state.users)
+      return {
+        ...state,
+      };
+    switch (headerControl) {
+      case 'id':
+        filteredUsers = [...state.users].sort((a, b) => a.id - b.id);
+        break;
+      case 'registrationDate':
+        filteredUsers = [...state.users].sort((a, b) => {
+          const dateA = new Date(a.registrationDate).getTime();
+          const dateB = new Date(b.registrationDate).getTime();
+          return dateA - dateB;
+        });
+        break;
+      case 'fullName':
+        filteredUsers = [...state.users].sort((a, b) =>
+          a.fullName.localeCompare(b.fullName)
+        );
+        break;
+      case 'position':
+        filteredUsers = [...state.users].sort((a, b) =>
+          a.position.localeCompare(b.fullName)
+        );
+        break;
+      case 'email':
+        filteredUsers = [...state.users].sort((a, b) =>
+          a.email.localeCompare(b.fullName)
+        );
+        break;
+      case 'phoneNumber':
+        filteredUsers = [...state.users].sort((a, b) =>
+          a.phoneNumber.localeCompare(b.fullName)
+        );
+        break;
+      default:
+        filteredUsers = [...state.users];
+        break;
+    }
+
+    return {
+      ...state,
+      filteredUsers,
+    };
   })
 );

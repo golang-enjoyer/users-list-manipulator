@@ -1,7 +1,7 @@
 export const USERS_MOCK_DATA = [
   {
     id: 1,
-    registrationDate: '2024-01-13',
+    registrationDate: '2023-12-10',
     fullName: 'John Doe',
     position: 'Software Developer',
     email: 'john.doe@example.com',
@@ -10,7 +10,7 @@ export const USERS_MOCK_DATA = [
   },
   {
     id: 2,
-    registrationDate: '2024-01-13',
+    registrationDate: '2020-01-05',
     fullName: 'Alice Smith',
     position: 'Data Scientist',
     email: 'alice.smith@example.com',
@@ -19,7 +19,7 @@ export const USERS_MOCK_DATA = [
   },
   {
     id: 3,
-    registrationDate: '2024-01-13',
+    registrationDate: '2019-06-07',
     fullName: 'Bob Johnson',
     position: 'UX Designer',
     email: 'bob.johnson@example.com',

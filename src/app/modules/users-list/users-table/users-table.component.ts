@@ -8,15 +8,20 @@ import {
   takeUntil,
 } from 'rxjs';
 import { FilterService } from 'src/app/shared/services/filter.service';
-import { TABLE_HEADERS } from './consts';
+import { TABLE_HEADERS, headersToControl } from './consts';
 import { User } from 'src/app/shared';
 import { Store } from '@ngrx/store';
 import {
   loadUsers,
   deleteSelectedUsers,
   applyFilters,
+  filterUsersByHeader,
 } from 'src/app/store/actions';
 import { selectUsers, selectFilteredUsers } from 'src/app/store/selectors';
+
+type HeaderMap = {
+  [K in (typeof TABLE_HEADERS)[number]]: string;
+};
 
 @Component({
   selector: 'app-users-table',
@@ -24,7 +29,7 @@ import { selectUsers, selectFilteredUsers } from 'src/app/store/selectors';
   styleUrls: ['./users-table.component.scss'],
 })
 export class UsersTableComponent implements OnInit, OnDestroy {
-  tableHeaders: string[] = TABLE_HEADERS;
+  tableHeaders: typeof TABLE_HEADERS = TABLE_HEADERS;
   store = inject(Store);
 
   users$: Observable<User[] | null> = this.store.select(selectUsers);
@@ -102,6 +107,12 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     this.currentPage$.next(1);
 
     this.selectedUserIds = [];
+  }
+
+  filterHeader(headerName: (typeof TABLE_HEADERS)[number]) {
+    const headerControl: keyof User = headersToControl[headerName];
+
+    this.store.dispatch(filterUsersByHeader({ headerControl }));
   }
 
   ngOnDestroy(): void {

@@ -4,7 +4,7 @@
     <div class="filter-inputs">
       <div *ngFor="let filter of inputFilters">
         <div class="filter-input">
-          <label class="filter-input__label">{{ filter.label }}
+          <label class="filter-input__label">{{ filter.alias }}
             <div class="filter-input__field">
               <input [formControlName]="filter.label" [type]="filter.type" [placeholder]="filter.placeholder">
             </div>

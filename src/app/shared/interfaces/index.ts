@@ -1,2 +1,2 @@
 export * from './user.interface';
-export * from './filter.interface';
+export * from './input-filter.interface';

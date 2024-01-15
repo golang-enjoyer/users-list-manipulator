@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Filter, FilterFormControls } from 'src/app/shared';
+import { InputFilter, FilterFormControls } from 'src/app/shared';
 import { FilterService } from 'src/app/shared/services/filter.service';
 import { INPUT_FILTERS } from './consts';
 
@@ -10,7 +10,7 @@ import { INPUT_FILTERS } from './consts';
   styleUrls: ['./filters-header.component.scss'],
 })
 export class FiltersHeaderComponent implements OnInit {
-  readonly inputFilters: Filter[] = INPUT_FILTERS;
+  readonly inputFilters: InputFilter[] = INPUT_FILTERS;
   filterForm!: FormGroup;
 
   private fb = inject(FormBuilder);

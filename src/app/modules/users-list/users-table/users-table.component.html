@@ -4,7 +4,7 @@
       <thead>
           <tr>
             <th class="users-table__checkbox-header"></th>
-            <th *ngFor="let header of tableHeaders">{{ header }}</th>
+            <th *ngFor="let header of tableHeaders" (click)="filterHeader(header)">{{ header }}</th>
           </tr>
         </thead>
       <tbody>
