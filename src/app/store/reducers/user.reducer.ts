@@ -44,7 +44,6 @@ export const userReducer = createReducer(
       state.filteredUsers.filter((user) => !selectedUserIds.includes(user.id)),
   })),
   on(UserActions.addUser, (state, { user }) => {
-    console.log(user);
     const newId =
       state.users && state.users.length > 0
         ? Math.max(...state.users!.map((u) => u.id)) + 1
@@ -54,6 +53,15 @@ export const userReducer = createReducer(
       ...state,
       users: [...state.users!, newUser],
       filteredUsers: [...state.filteredUsers!, newUser], // You might need to update filteredUsers if needed
+    };
+  }),
+  on(UserActions.alterUser, (state, { user }) => {
+    const updatedUsers =
+      state.users && state.users.map((u) => (u.id === user.id ? user : u));
+    return {
+      ...state,
+      users: updatedUsers,
+      filteredUsers: updatedUsers,
     };
   }),
   on(UserActions.filterUsersByHeader, (state, { headerControl }) => {

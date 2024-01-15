@@ -1,19 +1,37 @@
 <ng-container *ngIf="filteredUsers$ | async as filteredUsers; else loadingTpl">
   <ng-container *ngIf="filteredUsers.length; else noDataTpl">
-  <table class="users-table">
+    <table class="users-table">
       <thead>
-          <tr>
-            <th class="users-table__checkbox-header"></th>
-            <th *ngFor="let header of tableHeaders" (click)="filterHeader(header)">{{ header }}</th>
-          </tr>
-        </thead>
+        <tr>
+          <th class="users-table__checkbox-header"></th>
+          <th
+            *ngFor="let header of tableHeaders"
+            (click)="filterHeader(header)"
+          >
+            {{ header }}
+          </th>
+        </tr>
+      </thead>
       <tbody>
-        <tr *ngFor="let user of filteredAndPaginatedUsers$ | async" class="users-table__table-row" (mouseenter)="isRowHovered = true" (mouseleave)="isRowHovered = false">
-          <div>
-          <input *ngIf="isRowHovered" class="users-table__select-checkbox" type="checkbox" [checked]="isUserSelected(user.id)" (click)="handleCheckboxClick(user.id)"/>
-        </div>
+        <tr
+          *ngFor="let user of filteredAndPaginatedUsers$ | async"
+          class="users-table__table-row"
+          (mouseenter)="isRowHovered = true"
+          (mouseleave)="isRowHovered = false"
+        >
+          <div class="users-table__options">
+            <input
+              class="users-table__select-checkbox"
+              type="checkbox"
+              [checked]="isUserSelected(user.id)"
+              (click)="handleCheckboxClick(user.id)"
+            />
+            <button class="users-table__edit-icon" (click)="setEditMode(user)">
+              Изменить
+            </button>
+          </div>
           <td>{{ user.id }}</td>
-          <td>{{ user.registrationDate | date: 'dd.MM.yyyy' }}</td>
+          <td>{{ user.registrationDate | date : "dd.MM.yyyy" }}</td>
           <td>{{ user.fullName }}</td>
           <td>{{ user.position }}</td>
           <td class="users-table__email-column">
@@ -21,26 +39,46 @@
               {{ user.email }}
             </a>
           </td>
-          <td>{{ user.password | passwordHide}}</td>
-          <td>{{ user.phoneNumber | phoneFormat}}</td>
+          <td>{{ user.password | passwordHide }}</td>
+          <td>{{ user.phoneNumber | phoneFormat }}</td>
         </tr>
       </tbody>
     </table>
-    <button *ngIf="areIdsSelected" class="users-table__delete-button" (click)="deleteSelectedRows()">Удалить выбранные строки</button>
+    <button
+      *ngIf="areIdsSelected"
+      class="users-table__delete-button"
+      (click)="deleteSelectedRows()"
+    >
+      Удалить выбранные строки
+    </button>
 
-    <app-pagination [currentPage]="currentPage$.value" [totalItems]="filteredUsers.length" [itemsPerPage]="itemsPerPage" (pageChange)="onPageChange($event)"></app-pagination>
+    <app-pagination
+      [currentPage]="currentPage$.value"
+      [totalItems]="filteredUsers.length"
+      [itemsPerPage]="itemsPerPage"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="editUserConfiguration$ | async as editUserConfiguration">
+  <ng-container *ngIf="editUserConfiguration.wantEdit">
+    <app-modal (modalClosed)="onModalClose()">
+      <h1 class="add-title">
+        Изменить данные пользователя {{ editUserConfiguration.user?.fullName }}
+      </h1>
+      <app-user-form
+        [user]="editUserConfiguration.user"
+        (formSubmitted)="onFormSubmit($event)"
+      ></app-user-form>
+    </app-modal>
   </ng-container>
 </ng-container>
 
 <ng-template #loadingTpl>
-  <div class="loading">
-    Loading...
-  </div>
+  <div class="loading">Loading...</div>
 </ng-template>
 
-
 <ng-template #noDataTpl>
-  <div class="no-data">
-  Нет данных с такими параметрами
-  </div>  
+  <div class="no-data">Нет данных с такими параметрами</div>
 </ng-template>

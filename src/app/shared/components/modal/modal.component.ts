@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { ModalService } from './modal.service';
 import { Observable } from 'rxjs';
 
@@ -8,11 +8,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent {
+  @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
+
   modalService = inject(ModalService);
 
   showModal$: Observable<boolean> = this.modalService.showModal$;
 
   closeModal(): void {
     this.modalService.closeModal();
+    this.modalClosed.emit();
   }
 }

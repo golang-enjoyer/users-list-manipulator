@@ -7,6 +7,7 @@
 }
 
 .users-table {
+  display: table;
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.25rem;
@@ -16,6 +17,7 @@
     border: 1px solid #ddd;
     padding: 0.5rem;
     text-align: center;
+    vertical-align: middle;
   }
 
   th {
@@ -28,14 +30,27 @@
     visibility: hidden;
   }
 
+  &__body-row {
+    display: contents;
+  }
+
   &__table-row {
     position: relative;
   }
 
+  &__options {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
   &__select-checkbox {
     position: absolute;
+    top: 0.5rem;
     left: 0;
-    top: 0;
+  }
+
+  &__edit-icon {
+    margin-left: 1.5rem;
   }
 
   &__email-column {
@@ -47,6 +62,10 @@
     padding: 0.75rem;
     @include accent-button;
   }
+}
+
+.add-title {
+  color: cornflowerblue;
 }
 
 .loading,

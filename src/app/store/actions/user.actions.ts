@@ -21,6 +21,11 @@ export const addUser = createAction(
   props<{ user: User }>()
 );
 
+export const alterUser = createAction(
+  '[User] Altered User',
+  props<{ user: User }>()
+);
+
 export const filterUsersByHeader = createAction(
   '[User] Filter Users By Header',
   props<{ headerControl: keyof User }>()

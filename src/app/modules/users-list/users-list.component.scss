@@ -3,9 +3,6 @@
 .add-button {
   display: flex;
   margin-left: auto;
-}
-
-.add-button {
   margin-right: 4.75rem;
   padding: 0.75rem;
   @include accent-button;
@@ -13,56 +10,4 @@
 
 .add-title {
   color: cornflowerblue;
-}
-
-.form {
-  max-width: 18rem;
-  margin: 0 auto;
-
-  &__control {
-    display: flex;
-    flex-direction: column;
-
-    & + & {
-      margin-top: 2rem;
-    }
-
-    input {
-      width: 15rem;
-      padding: 0.5rem 1rem;
-    }
-
-    label {
-      margin-bottom: 0.5rem;
-      text-align: left;
-      cursor: pointer;
-    }
-  }
-
-  &__phone-control {
-    input,
-    label {
-      display: flex;
-      align-self: center;
-    }
-  }
-
-  &__save-button {
-    width: 100%;
-    margin-top: 5rem;
-    padding: 0.75rem 0;
-    @include accent-button;
-
-    &:disabled {
-      background-color: grey;
-      cursor: not-allowed;
-    }
-  }
-}
-
-.control {
-  &__validation-error {
-    margin-top: 0.5rem;
-    color: red;
-  }
 }

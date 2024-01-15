@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { User } from 'src/app/shared';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { phoneNumberValidator } from 'src/app/shared/validators/phone-number.validator';
 import { addUser } from 'src/app/store/actions';
@@ -15,6 +16,9 @@ export class UsersListComponent implements OnInit {
   private modalService = inject(ModalService);
   private fb = inject(FormBuilder);
   private store = inject(Store);
+
+  isModalOpened = false;
+
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -34,38 +38,18 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    this.modalService.closeModal();
-
-    this.store.dispatch(addUser({ user: this.userForm.value }));
-    this.userForm.reset();
-  }
-
   toggleModal(): void {
+    this.isModalOpened = true;
     this.modalService.openModal();
   }
 
-  get registrationDateControl() {
-    return this.userForm.get('registrationDate');
+  onModalClose(): void {
+    this.isModalOpened = false;
   }
 
-  get fullNameControl() {
-    return this.userForm.get('fullName');
-  }
-
-  get positionControl() {
-    return this.userForm.get('position');
-  }
-
-  get emailControl() {
-    return this.userForm.get('email');
-  }
-
-  get passwordControl() {
-    return this.userForm.get('password');
-  }
-
-  get phoneNumberControl() {
-    return this.userForm.get('phoneNumber');
+  onFormSubmit(user: User): void {
+    this.isModalOpened = false;
+    this.modalService.closeModal();
+    this.store.dispatch(addUser({ user }));
   }
 }

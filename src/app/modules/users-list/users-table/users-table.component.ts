@@ -16,12 +16,10 @@ import {
   deleteSelectedUsers,
   applyFilters,
   filterUsersByHeader,
+  alterUser,
 } from 'src/app/store/actions';
 import { selectUsers, selectFilteredUsers } from 'src/app/store/selectors';
-
-type HeaderMap = {
-  [K in (typeof TABLE_HEADERS)[number]]: string;
-};
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
 
 @Component({
   selector: 'app-users-table',
@@ -50,6 +48,17 @@ export class UsersTableComponent implements OnInit, OnDestroy {
 
   isRowHovered: boolean = false;
 
+  editUserConfiguration$: BehaviorSubject<{
+    wantEdit: boolean;
+    user: User | null;
+  }> = new BehaviorSubject<{
+    wantEdit: boolean;
+    user: User | null;
+  }>({
+    wantEdit: false,
+    user: null,
+  });
+
   readonly itemsPerPage: number = 3;
 
   get areIdsSelected(): boolean {
@@ -61,6 +70,8 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject();
 
   private filterService = inject(FilterService);
+
+  private modalService = inject(ModalService);
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers());
@@ -95,6 +106,24 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  setEditMode(user: User): void {
+    this.editUserConfiguration$.next({
+      wantEdit: true,
+      user: user,
+    });
+    this.modalService.openModal();
+  }
+
+  onModalClose(): void {
+    this.resetConfiguration();
+  }
+
+  onFormSubmit(user: User): void {
+    this.store.dispatch(alterUser({ user }));
+    this.modalService.closeModal();
+    this.resetConfiguration();
+  }
+
   isUserSelected(userId: number): boolean {
     return this.selectedUserIds.includes(userId);
   }
@@ -125,5 +154,12 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   }): void {
     this.currentPage$.next(1);
     this.store.dispatch(applyFilters({ filters }));
+  }
+
+  private resetConfiguration(): void {
+    this.editUserConfiguration$.next({
+      wantEdit: false,
+      user: null,
+    });
   }
 }
