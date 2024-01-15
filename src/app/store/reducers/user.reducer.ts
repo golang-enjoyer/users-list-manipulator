@@ -52,7 +52,7 @@ export const userReducer = createReducer(
     return {
       ...state,
       users: [...state.users!, newUser],
-      filteredUsers: [...state.filteredUsers!, newUser], // You might need to update filteredUsers if needed
+      filteredUsers: [...state.filteredUsers!, newUser],
     };
   }),
   on(UserActions.alterUser, (state, { user }) => {

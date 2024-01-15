@@ -18,7 +18,7 @@ import { UserEffects } from './store/effects/user.effects';
     UsersListModule,
     SharedModule,
     AppRoutingModule,
-    StoreModule.forRoot({ user: userReducer }), // Register your user reducer
+    StoreModule.forRoot({ user: userReducer }),
     EffectsModule.forRoot([UserEffects]),
   ],
   providers: [],

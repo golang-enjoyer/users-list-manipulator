@@ -4,21 +4,34 @@
     <div class="filter-inputs">
       <div *ngFor="let filter of inputFilters">
         <div class="filter-input">
-          <label class="filter-input__label">{{ filter.alias }}
+          <label class="filter-input__label"
+            >{{ filter.alias }}
             <div class="filter-input__field">
-              <input [formControlName]="filter.label" [type]="filter.type" [placeholder]="filter.placeholder">
+              <input
+                [formControlName]="filter.label"
+                [type]="filter.type"
+                [placeholder]="filter.placeholder"
+              />
             </div>
           </label>
         </div>
       </div>
     </div>
     <div class="buttons-block">
-    <button class="header-content__button" type="button" (click)="applyFilters()">
-      Применить фильтры
-    </button>
-    <button class="header-content__button" type="button" (click)="clearFilters()">
-      Очистить фильтры
-    </button>
-  </div>
+      <button
+        class="header-content__button"
+        type="button"
+        (click)="applyFilters()"
+      >
+        Применить фильтры
+      </button>
+      <button
+        class="header-content__button"
+        type="button"
+        (click)="clearFilters()"
+      >
+        Очистить фильтры
+      </button>
+    </div>
   </div>
 </form>

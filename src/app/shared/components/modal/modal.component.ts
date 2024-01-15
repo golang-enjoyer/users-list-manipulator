@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class ModalComponent {
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
-  modalService = inject(ModalService);
+  modalService: ModalService = inject(ModalService);
 
   showModal$: Observable<boolean> = this.modalService.showModal$;
 

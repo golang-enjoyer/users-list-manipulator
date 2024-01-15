@@ -7,8 +7,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { phoneNumberValidator } from 'src/app/shared/validators/phone-number.validator';
-import { User } from '../../interfaces';
+import { User, phoneNumberValidator } from 'src/app/shared';
 
 @Component({
   selector: 'app-user-form',

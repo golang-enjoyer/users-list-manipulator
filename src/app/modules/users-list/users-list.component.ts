@@ -1,9 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { User } from 'src/app/shared';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { phoneNumberValidator } from 'src/app/shared/validators/phone-number.validator';
+import { User, ModalService } from 'src/app/shared';
 import { addUser } from 'src/app/store/actions';
 
 @Component({
@@ -11,32 +9,12 @@ import { addUser } from 'src/app/store/actions';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss'],
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent {
   userForm!: FormGroup;
-  private modalService = inject(ModalService);
-  private fb = inject(FormBuilder);
-  private store = inject(Store);
+  isModalOpened: boolean = false;
 
-  isModalOpened = false;
-
-  ngOnInit(): void {
-    this.initializeForm();
-  }
-
-  initializeForm(): void {
-    this.userForm = this.fb.group({
-      ID: [],
-      registrationDate: ['', Validators.required],
-      fullName: ['', Validators.required],
-      position: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      phoneNumber: [
-        '',
-        Validators.compose([Validators.required, phoneNumberValidator()]),
-      ],
-    });
-  }
+  private modalService: ModalService = inject(ModalService);
+  private store: Store = inject(Store);
 
   toggleModal(): void {
     this.isModalOpened = true;

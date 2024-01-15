@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PhoneFormatPipe } from './pipes/phote-format.pipe';
+import { PhoneFormatPipe } from './pipes/phone-format.pipe';
 import { PasswordHidePipe } from './pipes/password-hide.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { CommonModule } from '@angular/common';

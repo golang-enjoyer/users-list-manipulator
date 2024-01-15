@@ -7,9 +7,8 @@ import {
   map,
   takeUntil,
 } from 'rxjs';
-import { FilterService } from 'src/app/shared/services/filter.service';
 import { TABLE_HEADERS, headersToControl } from './consts';
-import { User } from 'src/app/shared';
+import { User, FilterService, ModalService } from 'src/app/shared';
 import { Store } from '@ngrx/store';
 import {
   loadUsers,
@@ -19,7 +18,6 @@ import {
   alterUser,
 } from 'src/app/store/actions';
 import { selectUsers, selectFilteredUsers } from 'src/app/store/selectors';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
 
 @Component({
   selector: 'app-users-table',
@@ -28,7 +26,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 })
 export class UsersTableComponent implements OnInit, OnDestroy {
   tableHeaders: typeof TABLE_HEADERS = TABLE_HEADERS;
-  store = inject(Store);
+  store: Store = inject(Store);
 
   users$: Observable<User[] | null> = this.store.select(selectUsers);
 
@@ -134,7 +132,6 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     );
 
     this.currentPage$.next(1);
-
     this.selectedUserIds = [];
   }
 
