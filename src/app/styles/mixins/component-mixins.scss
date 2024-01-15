@@ -1,0 +1,10 @@
+@import "../variables/colors.scss";
+
+@mixin accent-button {
+  padding: 0.75rem;
+  color: $button-primary-color;
+  background-color: $button-accent-bg;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}

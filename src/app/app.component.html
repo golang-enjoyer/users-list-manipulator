@@ -1,1 +1,8 @@
-<app-users-list></app-users-list>
+<div>
+    <nav class="app-navigation">
+        <button class="app-navigation__button" routerLink="/about" routerLinkActive="active">О платформе</button>
+        <button class="app-navigation__button" routerLink="/upload-users" routerLinkActive="active">Загрузка пользователей</button>
+        <button class="app-navigation__button" routerLink="/users-list" routerLinkActive="active">Список пользователей</button>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

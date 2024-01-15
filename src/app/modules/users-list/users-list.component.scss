@@ -1,3 +1,5 @@
+@import "/src/app/styles/mixins/component-mixins.scss";
+
 .add-button {
   display: flex;
   margin-left: auto;
@@ -6,11 +8,7 @@
 .add-button {
   margin-right: 4.75rem;
   padding: 0.75rem;
-  color: white;
-  background-color: blue;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
+  @include accent-button;
 }
 
 .add-title {
@@ -53,14 +51,11 @@
     width: 100%;
     margin-top: 5rem;
     padding: 0.75rem 0;
-    color: white;
-    background-color: blue;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
+    @include accent-button;
 
     &:disabled {
       background-color: grey;
+      cursor: not-allowed;
     }
   }
 }
